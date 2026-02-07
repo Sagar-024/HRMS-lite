@@ -1,55 +1,84 @@
 import React from 'react';
 import useStore from '../store/useStore';
+import { Trash2, User } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const EmployeeTable = () => {
-    const { employees, removeEmployee, loading } = useStore();
+    const { employees, deleteEmployee, loading } = useStore();
 
     if (loading && employees.length === 0) {
-        return <div className="p-8 text-center text-stone-400 italic">Loading Personnel...</div>;
+        return (
+            <div className="bg-surface rounded-xl shadow-card p-8 text-center border border-stone-100">
+                <div className="animate-spin w-8 h-8 border-4 border-brand border-t-transparent rounded-full mx-auto mb-4"></div>
+                <p className="text-stone-400 font-medium">Loading employee directory...</p>
+            </div>
+        );
     }
 
     return (
-        <div className="bg-white rounded-lg border border-stone-200 shadow-subtle overflow-hidden">
-            <div className="px-6 py-4 border-b border-stone-100 flex justify-between items-center">
-                <h3 className="font-serif text-lg text-ink">Directory</h3>
-                <span className="text-xs text-stone-400 font-medium">{employees.length} Records</span>
+        <div className="bg-surface rounded-xl shadow-card border border-stone-100 overflow-hidden">
+            <div className="px-6 py-5 border-b border-stone-100 flex items-center justify-between">
+                <h3 className="font-bold text-lg text-ink">Employee Directory</h3>
+                <span className="bg-blue-50 text-brand text-xs font-bold px-2 py-1 rounded-full">{employees.length} Total</span>
             </div>
 
             <div className="overflow-x-auto">
                 <table className="w-full text-left border-collapse">
                     <thead>
-                        <tr className="bg-stone-50 border-b border-stone-200">
-                            <th className="px-6 py-3 text-xs font-bold text-stone-500 uppercase tracking-wider">ID</th>
-                            <th className="px-6 py-3 text-xs font-bold text-stone-500 uppercase tracking-wider">Name</th>
-                            <th className="px-6 py-3 text-xs font-bold text-stone-500 uppercase tracking-wider">Dept</th>
-                            <th className="px-6 py-3 text-xs font-bold text-stone-500 uppercase tracking-wider text-right">Actions</th>
+                        <tr className="bg-stone-50/50 border-b border-stone-100">
+                            <th className="px-6 py-4 text-xs font-bold text-stone-500 uppercase tracking-wider">Employee ID</th>
+                            <th className="px-6 py-4 text-xs font-bold text-stone-500 uppercase tracking-wider">Full Name</th>
+                            <th className="px-6 py-4 text-xs font-bold text-stone-500 uppercase tracking-wider">Email</th>
+                            <th className="px-6 py-4 text-xs font-bold text-stone-500 uppercase tracking-wider">Department</th>
+                            <th className="px-6 py-4 text-xs font-bold text-stone-500 uppercase tracking-wider text-right">Actions</th>
                         </tr>
                     </thead>
-                    <tbody className="divide-y divide-stone-100">
-                        {employees.map((emp) => (
-                            <tr key={emp._id} className="hover:bg-stone-50/50 transition-colors">
-                                <td className="px-6 py-4 text-sm text-stone-600 font-mono">{emp.employeeId}</td>
-                                <td className="px-6 py-4 text-sm text-ink font-medium">
-                                    {emp.name}
-                                    <div className="text-xs text-stone-400 font-normal">{emp.email}</div>
-                                </td>
-                                <td className="px-6 py-4 text-sm text-stone-500">
-                                    <span className="inline-flex items-center px-2 py-1 rounded bg-stone-100 text-xs font-medium text-stone-600">
-                                        {emp.department}
-                                    </span>
-                                </td>
-                                <td className="px-6 py-4 text-right">
-                                    <button
-                                        onClick={() => removeEmployee(emp._id)}
-                                        className="text-red-500 hover:text-red-700 text-xs font-medium uppercase tracking-wide"
-                                    >
-                                        Delete
-                                    </button>
+                    <tbody className="divide-y divide-stone-50">
+                        <AnimatePresence>
+                            {employees.map((emp, index) => (
+                                <motion.tr
+                                    key={emp._id}
+                                    initial={{ opacity: 0, y: 10 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    exit={{ opacity: 0, height: 0, transition: { duration: 0.2 } }}
+                                    transition={{ delay: index * 0.05 }}
+                                    className="hover:bg-blue-50/30 transition-colors group"
+                                >
+                                    <td className="px-6 py-4 text-sm text-stone-500 font-mono group-hover:text-brand transition-colors">
+                                        {emp.employeeId}
+                                    </td>
+                                    <td className="px-6 py-4 text-sm text-ink font-bold flex items-center gap-3">
+                                        <div className="w-8 h-8 rounded-full bg-stone-100 flex items-center justify-center text-stone-400">
+                                            <User size={16} />
+                                        </div>
+                                        {emp.fullName}
+                                    </td>
+                                    <td className="px-6 py-4 text-sm text-stone-600">{emp.email}</td>
+                                    <td className="px-6 py-4 text-sm text-stone-600">
+                                        <span className="bg-stone-100 text-stone-600 px-2 py-1 rounded text-xs font-medium border border-stone-200">
+                                            {emp.department}
+                                        </span>
+                                    </td>
+                                    <td className="px-6 py-4 text-right">
+                                        <button
+                                            onClick={() => deleteEmployee(emp._id)}
+                                            className="p-2 text-stone-400 hover:text-danger hover:bg-red-50 rounded-lg transition-all"
+                                            title="Delete Employee"
+                                            aria-label={`Delete ${emp.fullName}`}
+                                        >
+                                            <Trash2 size={18} />
+                                        </button>
+                                    </td>
+                                </motion.tr>
+                            ))}
+                        </AnimatePresence>
+
+                        {employees.length === 0 && !loading && (
+                            <tr>
+                                <td colSpan="5" className="px-6 py-12 text-center text-stone-400 italic">
+                                    No employees found. Add one to get started.
                                 </td>
                             </tr>
-                        ))}
-                        {employees.length === 0 && !loading && (
-                            <tr><td colSpan="4" className="text-center py-8 text-stone-400 italic">No records found</td></tr>
                         )}
                     </tbody>
                 </table>

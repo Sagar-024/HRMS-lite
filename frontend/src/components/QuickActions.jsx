@@ -1,32 +1,83 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { UserPlus, Calendar, FileText, Settings, ChevronRight } from 'lucide-react';
+import { motion } from 'framer-motion';
 
-const ActionCard = ({ title, icon: Icon, desc, color, onClick }) => {
-    // Map colors
-    const colors = {
-        coral: 'bg-coral text-white',
-        blue: 'bg-brand text-white',
-        indigo: 'bg-indigo-500 text-white',
-        stone: 'bg-stone-500 text-white'
+const ActionCard = ({ title, icon: Icon, desc, variant, onClick }) => {
+    const variants = {
+        primary: {
+            container: 'bg-gradient-to-br from-coral-500 to-coral-600 text-white shadow-lg hover:shadow-xl',
+            icon: 'bg-white/20 backdrop-blur-sm',
+            iconColor: 'text-white',
+            textColor: 'text-white',
+            descColor: 'text-white/90',
+            chevronColor: 'text-white/70'
+        },
+        secondary: {
+            container: 'bg-gradient-to-br from-brand-500 to-brand-600 text-white shadow-lg hover:shadow-xl',
+            icon: 'bg-white/20 backdrop-blur-sm',
+            iconColor: 'text-white',
+            textColor: 'text-white',
+            descColor: 'text-white/90',
+            chevronColor: 'text-white/70'
+        },
+        tertiary: {
+            container: 'bg-white border border-stone-200/80 hover:border-violet-200 shadow-soft hover:shadow-card',
+            icon: 'bg-gradient-to-br from-violet-50 to-purple-50',
+            iconColor: 'text-violet-600',
+            textColor: 'text-ink',
+            descColor: 'text-ink-light',
+            chevronColor: 'text-stone-400'
+        },
+        quaternary: {
+            container: 'bg-white border border-stone-200/80 hover:border-stone-300 shadow-soft hover:shadow-card',
+            icon: 'bg-gradient-to-br from-stone-50 to-stone-100',
+            iconColor: 'text-stone-600',
+            textColor: 'text-ink',
+            descColor: 'text-ink-light',
+            chevronColor: 'text-stone-400'
+        }
     };
 
+    const style = variants[variant] || variants.tertiary;
+    const isPrimary = variant === 'primary' || variant === 'secondary';
+
     return (
-        <button
+        <motion.button
             onClick={onClick}
-            className="group w-full bg-surface p-5 rounded-xl shadow-card hover:shadow-hover border border-transparent hover:border-blue-100 transition-all duration-200 text-left flex items-start gap-4"
+            className={`group w-full p-6 rounded-2xl text-left flex items-start gap-5 relative overflow-hidden transition-all duration-300 ${style.container}`}
+            whileHover={{ scale: 1.02, y: -3 }}
+            whileTap={{ scale: 0.98 }}
+            transition={{ type: "spring", stiffness: 300, damping: 20 }}
         >
-            <div className={`p-3 rounded-lg ${colors[color]} shadow-md group-hover:scale-110 transition-transform duration-200`}>
-                <Icon size={24} strokeWidth={2} />
+            {/* Decorative Background Pattern for Primary/Secondary */}
+            {isPrimary && (
+                <div className="absolute top-0 right-0 p-4 opacity-10">
+                    <Icon size={120} strokeWidth={0.5} />
+                </div>
+            )}
+
+            {/* Icon */}
+            <div className={`relative z-10 p-3.5 rounded-xl ${style.icon} group-hover:scale-110 transition-transform duration-300`}>
+                <Icon size={24} strokeWidth={2.5} className={style.iconColor} />
             </div>
-            <div className="flex-1">
-                <h4 className="font-bold text-ink text-lg group-hover:text-brand transition-colors flex items-center justify-between">
-                    {title}
-                    <ChevronRight size={16} className="opacity-0 group-hover:opacity-100 transform translate-x-[-10px] group-hover:translate-x-0 transition-all text-stone-400" />
-                </h4>
-                <p className="text-sm text-stone-500 mt-1 leading-relaxed">{desc}</p>
+
+            {/* Content */}
+            <div className="flex-1 relative z-10">
+                <div className="flex items-start justify-between mb-2">
+                    <h4 className={`font-display font-bold text-xl ${style.textColor}`}>
+                        {title}
+                    </h4>
+                    <ChevronRight
+                        size={20}
+                        className={`${style.chevronColor} transform transition-transform duration-300 group-hover:translate-x-1`}
+                    />
+                </div>
+                <p className={`text-sm leading-relaxed font-medium ${style.descColor}`}>
+                    {desc}
+                </p>
             </div>
-        </button>
+        </motion.button>
     );
 };
 
@@ -36,38 +87,39 @@ const QuickActions = () => {
     return (
         <section>
             <div className="flex items-center justify-between mb-6">
-                <h3 className="text-xl font-bold text-ink tracking-tight">Quick Actions</h3>
+                <h3 className="text-xl font-display font-bold text-ink tracking-tight">
+                    Quick Actions
+                </h3>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                 <ActionCard
                     title="Add Employee"
                     icon={UserPlus}
                     desc="Onboard a new team member to the system."
-                    color="coral"
+                    variant="primary"
                     onClick={() => navigate('/employees')}
                 />
                 <ActionCard
                     title="Mark Attendance"
                     icon={Calendar}
                     desc="Log daily attendance for employees."
-                    color="blue"
+                    variant="secondary"
                     onClick={() => navigate('/attendance')}
                 />
-                {/* Placeholders for future features to fill grid */}
                 <ActionCard
-                    title="Generate Report"
+                    title="Reports"
                     icon={FileText}
-                    desc="Export monthly activity summary."
-                    color="indigo"
-                    onClick={() => { }} // No-op for now
+                    desc="Export monthly activity summaries."
+                    variant="tertiary"
+                    onClick={() => { }}
                 />
                 <ActionCard
-                    title="System Settings"
+                    title="Settings"
                     icon={Settings}
-                    desc="Configure global preferences."
-                    color="stone"
-                    onClick={() => { }} // No-op for now
+                    desc="Configure system preferences."
+                    variant="quaternary"
+                    onClick={() => { }}
                 />
             </div>
         </section>

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import useStore from '../store/useStore';
 import { Search, Calendar, Filter } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const AttendanceTable = () => {
     const { attendance, loading } = useStore();
@@ -39,7 +40,8 @@ const AttendanceTable = () => {
                         placeholder="Filter by Employee ID..."
                         value={filterId}
                         onChange={(e) => setFilterId(e.target.value)}
-                        className="w-full pl-10 pr-4 py-2 rounded-lg border border-stone-200 focus:border-brand focus:ring-2 focus:ring-brand/20 outline-none text-sm transition-all"
+                        className="w-full pl-10 pr-4 py-2 rounded-lg border border-stone-200 focus:border-brand focus:ring-2 focus:ring-brand/20 outline-none text-sm transition-all shadow-sm"
+                        aria-label="Filter attendance by Employee ID"
                     />
                 </div>
             </div>
@@ -55,44 +57,55 @@ const AttendanceTable = () => {
                         </tr>
                     </thead>
                     <tbody className="divide-y divide-stone-50">
-                        {filteredAttendance.length > 0 ? (
-                            filteredAttendance.map((record) => (
-                                <tr key={record._id} className="hover:bg-blue-50/30 transition-colors group">
-                                    <td className="px-6 py-4 text-sm text-ink font-medium">
-                                        {record.date ? new Date(record.date).toLocaleDateString() : 'N/A'}
+                        <AnimatePresence mode='popLayout'>
+                            {filteredAttendance.length > 0 ? (
+                                filteredAttendance.map((record, index) => (
+                                    <motion.tr
+                                        key={record._id}
+                                        initial={{ opacity: 0, x: -10 }}
+                                        animate={{ opacity: 1, x: 0 }}
+                                        exit={{ opacity: 0, x: 10 }}
+                                        transition={{ delay: index * 0.03 }}
+                                        className="hover:bg-blue-50/30 transition-colors group"
+                                    >
+                                        <td className="px-6 py-4 text-sm text-ink font-medium">
+                                            {record.date ? new Date(record.date).toLocaleDateString() : 'N/A'}
+                                        </td>
+                                        <td className="px-6 py-4 text-sm text-stone-500 font-mono group-hover:text-brand transition-colors">
+                                            {record.employeeId}
+                                        </td>
+                                        <td className="px-6 py-4 text-right">
+                                            <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-bold border ${record.status === 'Present'
+                                                ? 'bg-green-50 text-success border-green-100'
+                                                : 'bg-red-50 text-danger border-red-100'
+                                                }`}>
+                                                <span className={`w-1.5 h-1.5 rounded-full ${record.status === 'Present' ? 'bg-success' : 'bg-danger'}`}></span>
+                                                {record.status}
+                                            </span>
+                                        </td>
+                                    </motion.tr>
+                                ))
+                            ) : (
+                                <motion.tr
+                                    initial={{ opacity: 0 }}
+                                    animate={{ opacity: 1 }}
+                                >
+                                    <td colSpan="3" className="px-6 py-12 text-center text-stone-400">
+                                        <div className="flex flex-col items-center gap-2">
+                                            <Filter size={32} className="text-stone-200" />
+                                            <p>No records found matching "{filterId}"</p>
+                                        </div>
                                     </td>
-                                    <td className="px-6 py-4 text-sm text-stone-500 font-mono group-hover:text-brand transition-colors">
-                                        {record.employeeId}
-                                    </td>
-                                    <td className="px-6 py-4 text-right">
-                                        <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-bold border ${record.status === 'Present'
-                                            ? 'bg-green-50 text-success border-green-100'
-                                            : 'bg-red-50 text-danger border-red-100'
-                                            }`}>
-                                            <span className={`w-1.5 h-1.5 rounded-full ${record.status === 'Present' ? 'bg-success' : 'bg-danger'}`}></span>
-                                            {record.status}
-                                        </span>
-                                    </td>
-                                </tr>
-                            ))
-                        ) : (
-                            <tr>
-                                <td colSpan="3" className="px-6 py-12 text-center text-stone-400">
-                                    <div className="flex flex-col items-center gap-2">
-                                        <Filter size={32} className="text-stone-200" />
-                                        <p>No records found matching "{filterId}"</p>
-                                    </div>
-                                </td>
-                            </tr>
-                        )}
+                                </motion.tr>
+                            )}
+                        </AnimatePresence>
                     </tbody>
                 </table>
             </div>
 
-            {/* Footer / Pagination Placeholder */}
+            {/* Footer */}
             <div className="px-6 py-3 border-t border-stone-100 bg-stone-50/30 flex justify-between items-center text-xs text-stone-400">
                 <span>Showing {filteredAttendance.length} records</span>
-                {/* Pagination controls would go here */}
             </div>
         </div>
     );
