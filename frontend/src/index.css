@@ -1,0 +1,23 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    background-color: theme('colors.background');
+    color: theme('colors.ink.DEFAULT');
+    @apply font-sans antialiased;
+  }
+}
+
+@layer components {
+    .btn-primary {
+        @apply bg-brand text-white px-4 py-2 rounded-xl hover:bg-brand-600 transition-all duration-200 shadow-soft hover:shadow-hover active:scale-95;
+    }
+    .btn-action {
+        @apply bg-coral text-white px-4 py-2 rounded-xl hover:bg-coral-hover transition-all duration-200 shadow-soft hover:shadow-hover active:scale-95;
+    }
+    .card {
+        @apply bg-surface rounded-xl shadow-card border-none;
+    }
+}
