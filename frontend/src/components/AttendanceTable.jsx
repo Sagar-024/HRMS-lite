@@ -22,7 +22,7 @@ const AttendanceTable = () => {
     }
 
     return (
-        <div className="bg-surface rounded-xl shadow-card border border-stone-100 overflow-hidden">
+        <div className="card">
             {/* Header & Filter */}
             <div className="px-6 py-5 border-b border-stone-100 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <div className="flex items-center gap-2">

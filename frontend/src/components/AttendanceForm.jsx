@@ -21,7 +21,7 @@ const AttendanceForm = () => {
     };
 
     return (
-        <div className="bg-white p-6 lg:p-8 rounded-lg border border-stone-200 shadow-subtle">
+        <div className="card p-6 lg:p-8">
             <h3 className="font-serif text-xl text-ink mb-6">Log Attendance</h3>
 
             <form className="space-y-5" onSubmit={handleSubmit}>
@@ -32,7 +32,7 @@ const AttendanceForm = () => {
                         placeholder="EMP-000"
                         value={formData.employeeId}
                         onChange={(e) => setFormData({ ...formData, employeeId: e.target.value })}
-                        className="w-full bg-stone-50 border border-stone-200 px-4 py-2.5 rounded text-ink focus:outline-none focus:border-stone-400 transition-colors placeholder-stone-300"
+                        className="input-field"
                         required
                     />
                 </div>
@@ -43,7 +43,7 @@ const AttendanceForm = () => {
                         type="date"
                         value={formData.date}
                         onChange={(e) => setFormData({ ...formData, date: e.target.value })}
-                        className="w-full bg-stone-50 border border-stone-200 px-4 py-2.5 rounded text-ink focus:outline-none focus:border-stone-400 transition-colors placeholder-stone-300"
+                        className="input-field"
                         required
                     />
                 </div>
@@ -84,7 +84,7 @@ const AttendanceForm = () => {
                     <button
                         type="submit"
                         disabled={loading}
-                        className="w-full bg-ink text-white font-medium py-3 rounded hover:bg-stone-800 transition-colors disabled:opacity-50"
+                        className="w-full bg-ink text-white font-medium py-3 rounded shadow-[0_4px_8px_rgba(0,_0,_0,_0.12)] hover:shadow-[0_6px_16px_rgba(0,_0,_0,_0.16)] hover:-translate-y-0.5 active:shadow-[0_2px_4px_rgba(0,_0,_0,_0.1)] active:translate-y-0 transition-all duration-300 disabled:opacity-50"
                     >
                         {loading ? 'Logging...' : 'Mark Attendance'}
                     </button>

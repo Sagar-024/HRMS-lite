@@ -133,7 +133,7 @@ const ActivityFeed = React.memo(() => {
 
     return (
         <div
-            className="card h-full p-6 sm:p-8"
+            className="recent-activity-card h-full"
             role="region"
             aria-label="Recent Activity Feed"
         >

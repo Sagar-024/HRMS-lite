@@ -16,7 +16,7 @@ const EmployeeTable = () => {
     }
 
     return (
-        <div className="bg-surface rounded-xl shadow-card border border-stone-100 overflow-hidden">
+        <div className="card">
             <div className="px-6 py-5 border-b border-stone-100 flex items-center justify-between">
                 <h3 className="font-bold text-lg text-ink">Employee Directory</h3>
                 <span className="bg-blue-50 text-brand text-xs font-bold px-2 py-1 rounded-full">{employees.length} Total</span>

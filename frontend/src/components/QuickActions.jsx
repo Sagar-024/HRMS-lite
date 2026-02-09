@@ -15,7 +15,7 @@ const ActionCard = React.memo(({ title, icon: Icon, desc, onClick, index }) => {
             }}
             onClick={onClick}
             aria-label={`${title}: ${desc}`}
-            className="group w-full text-left flex items-start justify-between relative card p-8 hover:border-stone-300"
+            className="group w-full text-left flex items-start justify-between relative quick-action-card p-8"
             whileHover={{ y: -2 }}
         >
             <div className="flex items-start gap-4 flex-1">

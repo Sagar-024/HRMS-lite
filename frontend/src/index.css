@@ -33,38 +33,78 @@
     --text-4xl: clamp(2.25rem, 1.75rem + 2.5vw, 3.5rem);
 
     /* Design Tokens - Shadows */
-    /* Modern minimalist layering: 
-       1. Crisp border definition 
-       2. Soft ambient light 
-       3. Grounding shadow */
-    --shadow-card: 
-      0 0 0 1px rgba(0, 0, 0, 0.03), 
-      0 2px 8px rgba(0, 0, 0, 0.04), 
-      0 8px 24px rgba(0, 0, 0, 0.04);
-      
-    --shadow-card-hover: 
-      0 0 0 1px rgba(0, 0, 0, 0.04), 
-      0 4px 12px rgba(0, 0, 0, 0.06), 
-      0 12px 32px rgba(0, 0, 0, 0.08);
+    /* Premium Multi-layered Shadows with Inset Depth */
+    --shadow-card:
+      0 2.8px 2.2px rgba(0, 0, 0, 0.034),
+      0 6.7px 5.3px rgba(0, 0, 0, 0.048),
+      0 12.5px 10px rgba(0, 0, 0, 0.06),
+      0 22.3px 17.9px rgba(0, 0, 0, 0.072),
+      inset 0 1px 3px rgba(0, 0, 0, 0.05);
+
+    --shadow-card-hover:
+      0 2.8px 2.2px rgba(0, 0, 0, 0.034),
+      0 6.7px 5.3px rgba(0, 0, 0, 0.048),
+      0 12.5px 10px rgba(0, 0, 0, 0.06),
+      0 22.3px 17.9px rgba(0, 0, 0, 0.072),
+      0 41.8px 33.4px rgba(0, 0, 0, 0.086),
+      0 100px 80px rgba(0, 0, 0, 0.12),
+      inset 0 2px 4px rgba(0, 0, 0, 0.06);
+
+    --shadow-sidebar:
+      2px 0 8px rgba(0, 0, 0, 0.05),
+      4px 0 16px rgba(0, 0, 0, 0.03);
+
+    --shadow-modal:
+      0 2.8px 2.2px rgba(0, 0, 0, 0.034),
+      0 6.7px 5.3px rgba(0, 0, 0, 0.048),
+      0 12.5px 10px rgba(0, 0, 0, 0.06),
+      0 22.3px 17.9px rgba(0, 0, 0, 0.072),
+      0 41.8px 33.4px rgba(0, 0, 0, 0.086),
+      0 100px 80px rgba(0, 0, 0, 0.12);
+
+    --shadow-button: 0 4px 8px rgba(0, 0, 0, 0.12);
+    --shadow-button-hover: 0 6px 16px rgba(0, 0, 0, 0.16);
+    --shadow-button-active: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+    /* Inset Utilities */
+    --shadow-quick-action:
+      0 2.8px 2.2px rgba(0, 0, 0, 0.034),
+      0 6.7px 5.3px rgba(0, 0, 0, 0.048),
+      inset 0 1px 2px rgba(0, 0, 0, 0.04);
+
+    --shadow-quick-action-hover:
+      0 2.8px 2.2px rgba(0, 0, 0, 0.034),
+      0 6.7px 5.3px rgba(0, 0, 0, 0.048),
+      0 12.5px 10px rgba(0, 0, 0, 0.06),
+      inset 0 1px 3px rgba(0, 0, 0, 0.05);
+
+    --shadow-input-inset: inset 0 2px 4px rgba(0, 0, 0, 0.06);
+    --shadow-recent-activity:
+      0 2px 6px rgba(0, 0, 0, 0.06),
+      inset 0 1px 2px rgba(0, 0, 0, 0.03);
 
     /* Design Tokens - Border Radius */
     --radius-sm: 8px;
     --radius-md: 12px;
     --radius-lg: 16px;
   }
-  
+
   body {
     /* Revert to original lighter background */
-    background: #F9FAFB; 
+    background: #f9fafb;
     color: var(--color-text-primary);
-    font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-family:
+      "DM Sans",
+      -apple-system,
+      BlinkMacSystemFont,
+      sans-serif;
     @apply antialiased;
     position: relative;
   }
-  
+
   /* Atmospheric Noise Texture - Frontend Design Skill */
   body::before {
-    content: '';
+    content: "";
     position: fixed;
     top: 0;
     left: 0;
@@ -75,20 +115,25 @@
     z-index: 9999;
     mix-blend-mode: multiply;
   }
-  
+
   /* Accessible Focus States */
   :focus-visible {
-    outline: 2px solid #18181B;
+    outline: 2px solid #18181b;
     outline-offset: 2px;
     border-radius: 4px;
   }
-  
+
   /* Enhanced Typography */
-  h1, h2, h3, h4, h5, h6 {
-    font-family: 'DM Sans', system-ui, sans-serif;
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: "DM Sans", system-ui, sans-serif;
     letter-spacing: -0.025em;
   }
-  
+
   /* Smooth Scrolling */
   html {
     scroll-behavior: smooth;
@@ -99,16 +144,26 @@
   /* Refined Button Components */
   .btn-primary {
     @apply bg-stone-900 text-white px-5 py-2.5 rounded-lg
-           hover:bg-stone-800 transition-all duration-200 
-           shadow-sm hover:shadow-md active:scale-[0.98]
+           transition-all duration-300
+           hover:bg-stone-800 hover:-translate-y-0.5
+           active:translate-y-0
            focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-stone-900
            font-medium text-sm tracking-wide;
+    box-shadow: var(--shadow-button);
+  }
+
+  .btn-primary:hover {
+    box-shadow: var(--shadow-button-hover);
+  }
+
+  .btn-primary:active {
+    box-shadow: var(--shadow-button-active);
   }
   
   /* Premium Minimal Card - Modern & Lifted */
   .card {
     @apply bg-white border border-stone-200/80
-           hover:border-stone-300 transition-all duration-300 relative overflow-hidden;
+           transition-all duration-300 relative overflow-hidden;
     border-radius: 12px;
     background: linear-gradient(to bottom, #ffffff 0%, #fafafa 100%);
     box-shadow: var(--shadow-card);
@@ -116,12 +171,40 @@
   
   .card:hover {
     box-shadow: var(--shadow-card-hover);
+    transform: translateY(-4px);
+  }
+
+  .dropdown-menu, .modal {
+    box-shadow: var(--shadow-modal);
+  }
+  .quick-action-card {
+    transition: all 0.3s ease;
+    box-shadow: var(--shadow-quick-action);
+  }
+
+  .quick-action-card:hover {
+    box-shadow: var(--shadow-quick-action-hover);
     transform: translateY(-2px);
   }
 
-  /* Utility for inset look if specifically needed (e.g. inputs) */
-  .shadow-inner-soft {
-    box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.03);
+  /* Input Fields - Inset for "pressed" look */
+  .input-field {
+    @apply w-full bg-stone-50 border border-stone-200 px-4 py-2.5 rounded text-ink 
+           transition-all duration-300 outline-none;
+    box-shadow: var(--shadow-input-inset);
+  }
+
+  .input-field:focus {
+    @apply border-brand ring-2 ring-brand/10;
+    box-shadow: 
+      var(--shadow-input-inset),
+      0 0 0 3px rgba(37, 99, 235, 0.1); /* brand color ring */
+  }
+
+  /* Recent Activity Card - Subtle inner depth */
+  .recent-activity-card {
+    @apply bg-white border border-stone-200/80 rounded-xl p-6 sm:p-8;
+    box-shadow: var(--shadow-recent-activity);
   }
 
   /* Custom Scrollbar */
