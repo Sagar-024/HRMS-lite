@@ -16,13 +16,8 @@ const app = express();
 
 app.use(express.json());
 
-// CORS Configuration
-app.use(
-  cors({
-    origin: ["http://localhost:5173", "http://127.0.0.1:5173"], // Vite default port
-    credentials: true,
-  }),
-);
+// CORS Configuration - Allow all origins for simplicity/debugging
+app.use(cors()); // Default allows all origins
 
 // Routes
 app.use("/api/employees", employeeRoutes);
