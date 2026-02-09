@@ -148,30 +148,6 @@ const ActivityFeed = React.memo(() => {
                 >
                     Recent Activity
                 </h3>
-                <button
-                    className="antialiased"
-                    aria-label="View all recent activities"
-                    style={{
-                        fontSize: '11px',
-                        fontWeight: 700,
-                        textTransform: 'uppercase',
-                        letterSpacing: '0.12em',
-                        color: '#71717A',
-                        background: 'none',
-                        border: 'none',
-                        cursor: 'pointer',
-                        padding: '4px 0',
-                        transition: 'color 0.2s ease'
-                    }}
-                    onMouseEnter={(e) => {
-                        e.currentTarget.style.color = '#0A0A0A';
-                    }}
-                    onMouseLeave={(e) => {
-                        e.currentTarget.style.color = '#71717A';
-                    }}
-                >
-                    View All
-                </button>
             </div>
 
             {/* Activity List */}

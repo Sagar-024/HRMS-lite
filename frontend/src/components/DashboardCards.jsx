@@ -8,14 +8,11 @@ import {
     TrendingUp,
     TrendingDown
 } from 'lucide-react';
-import { motion, useMotionValue, useTransform } from 'framer-motion';
-
-
+import { motion } from 'framer-motion';
 
 const StatCard = React.memo(({ label, value, subtext, icon: Icon, color, trend, index }) => {
     const [isHovered, setIsHovered] = useState(false);
 
-    // Monochromatic with strategic accents
     const colorStyles = {
         blue: { iconColor: '#2563EB', accentColor: 'rgba(37, 99, 235, 0.1)' },
         green: { iconColor: '#059669', accentColor: 'rgba(5, 150, 105, 0.1)' },
@@ -25,78 +22,15 @@ const StatCard = React.memo(({ label, value, subtext, icon: Icon, color, trend, 
 
     const style = colorStyles[color];
 
-    // Card container variants - Professional synchronized entrance
-    const cardVariants = {
-        initial: { opacity: 0, y: 15, scale: 0.98 },
-        animate: {
-            opacity: 1,
-            y: 0,
-            scale: 1,
-            transition: {
-                duration: 0.4,
-                delay: index * 0.08, // Subtle stagger between cards
-                ease: [0.16, 1, 0.3, 1],
-                staggerChildren: 0.04, // Content flows in almost immediately
-            }
-        },
-        hover: {
-            transition: { staggerChildren: 0.03 }
-        }
-    };
-
-    const iconVariants = {
-        initial: { opacity: 0, scale: 0.8 },
-        animate: {
-            opacity: 1,
-            scale: 1,
-            transition: { duration: 0.3, ease: "easeOut" }
-        },
-        hover: {
-            scale: 1.1,
-            rotate: [0, -5, 5, 0],
-            transition: { duration: 0.4 }
-        }
-    };
-
-    const numberVariants = {
-        initial: { opacity: 0, y: 10 },
-        animate: {
-            opacity: 1,
-            y: 0,
-            transition: {
-                duration: 0.5,
-                type: 'spring',
-                stiffness: 200,
-                damping: 20
-            }
-        }
-    };
-
-    const badgeVariants = {
-        initial: { opacity: 0, x: 10 },
-        animate: {
-            opacity: 1,
-            x: 0,
-            transition: { duration: 0.3 }
-        }
-    };
-
-    // New variants for text details to ensure they sync
-    const textVariants = {
-        initial: { opacity: 0, y: 5 },
-        animate: {
-            opacity: 1,
-            y: 0,
-            transition: { duration: 0.3 }
-        }
-    };
-
     return (
         <motion.div
-            variants={cardVariants}
-            initial="initial"
-            animate="animate"
-            whileHover="hover"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{
+                duration: 0.4,
+                delay: index * 0.08,
+                ease: [0.25, 0.1, 0.25, 1]
+            }}
             onHoverStart={() => setIsHovered(true)}
             onHoverEnd={() => setIsHovered(false)}
             className="card relative cursor-pointer group overflow-hidden flex flex-col justify-between"
@@ -108,13 +42,11 @@ const StatCard = React.memo(({ label, value, subtext, icon: Icon, color, trend, 
                 padding: '32px',
             }}
         >
-
-
-            {/* Accent bar */}
+            {/* Accent bar - instant feedback on hover */}
             <motion.div
                 initial={{ scaleX: 0 }}
                 animate={{ scaleX: isHovered ? 1 : 0 }}
-                transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+                transition={{ duration: 0.25, ease: [0.25, 0.1, 0.25, 1] }}
                 className="absolute top-0 left-0 right-0 h-[3px] origin-left z-10"
                 style={{ background: style.iconColor }}
             />
@@ -123,27 +55,52 @@ const StatCard = React.memo(({ label, value, subtext, icon: Icon, color, trend, 
                 {/* Header Row: Icon + Trend */}
                 <div className="flex items-start justify-between mb-6">
                     {/* Icon */}
-                    <motion.div variants={iconVariants}>
+                    <motion.div
+                        initial={{ opacity: 0, scale: 0.8 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{
+                            duration: 0.3,
+                            delay: index * 0.08 + 0.1,
+                            ease: [0.25, 0.1, 0.25, 1]
+                        }}
+                    >
                         <motion.div
                             animate={{
-                                backgroundColor: isHovered ? style.accentColor : 'transparent'
+                                backgroundColor: isHovered ? style.accentColor : 'transparent',
+                                scale: isHovered ? 1.05 : 1
                             }}
-                            transition={{ duration: 0.3 }}
+                            transition={{ duration: 0.2 }}
                             className="inline-flex p-2.5 rounded-xl"
                         >
-                            <Icon
-                                size={28}
-                                strokeWidth={2.5}
-                                style={{ color: style.iconColor }}
-                            />
+                            <motion.div
+                                animate={{
+                                    rotate: isHovered ? [0, -5, 5, 0] : 0
+                                }}
+                                transition={{
+                                    duration: 0.5,
+                                    ease: [0.34, 1.56, 0.64, 1]
+                                }}
+                            >
+                                <Icon
+                                    size={28}
+                                    strokeWidth={2.5}
+                                    style={{ color: style.iconColor }}
+                                />
+                            </motion.div>
                         </motion.div>
                     </motion.div>
 
                     {/* Trend Badge */}
                     {trend && (
                         <motion.div
+                            initial={{ opacity: 0, scale: 0.8 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            transition={{
+                                duration: 0.3,
+                                delay: index * 0.08 + 0.15,
+                                ease: [0.25, 0.1, 0.25, 1]
+                            }}
                             className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[13px] font-bold antialiased border backdrop-blur-sm"
-                            variants={badgeVariants}
                             style={{
                                 color: trend === 'up' ? '#059669' : '#DC2626',
                                 background: trend === 'up' ? 'rgba(5, 150, 105, 0.06)' : 'rgba(220, 38, 38, 0.06)',
@@ -152,12 +109,11 @@ const StatCard = React.memo(({ label, value, subtext, icon: Icon, color, trend, 
                         >
                             <motion.div
                                 animate={{
-                                    y: trend === 'up' ? [-1, 1, -1] : [1, -1, 1],
+                                    y: isHovered ? (trend === 'up' ? -1 : 1) : 0
                                 }}
                                 transition={{
-                                    duration: 2,
-                                    repeat: Infinity,
-                                    ease: "easeInOut"
+                                    duration: 0.3,
+                                    ease: [0.25, 0.1, 0.25, 1]
                                 }}
                             >
                                 {trend === 'up' ? <TrendingUp size={14} strokeWidth={2.5} /> : <TrendingDown size={14} strokeWidth={2.5} />}
@@ -167,23 +123,47 @@ const StatCard = React.memo(({ label, value, subtext, icon: Icon, color, trend, 
                     )}
                 </div>
 
-                {/* Value */}
+                {/* Value - smooth entrance */}
                 <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{
+                        duration: 0.4,
+                        delay: index * 0.08 + 0.2,
+                        ease: [0.25, 0.1, 0.25, 1]
+                    }}
                     className="antialiased font-bold text-ink mb-2 tracking-tight"
-                    variants={numberVariants}
                     style={{
-                        fontSize: 'clamp(3rem, 4vw, 3.5rem)', // Fluid text for value
+                        fontSize: 'clamp(3rem, 4vw, 3.5rem)',
                         lineHeight: 1,
                         fontFeatureSettings: '"tnum", "ss01"',
                     }}
                 >
-                    {value}
+                    <motion.span
+                        animate={{
+                            scale: isHovered ? 1.03 : 1
+                        }}
+                        transition={{ duration: 0.2 }}
+                        style={{ display: 'inline-block' }}
+                    >
+                        {value}
+                    </motion.span>
                 </motion.div>
 
                 {/* Label */}
                 <motion.div
-                    className="antialiased text-[11px] font-bold uppercase tracking-[0.15em] mb-4 text-stone-500"
-                    variants={textVariants}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{
+                        duration: 0.3,
+                        delay: index * 0.08 + 0.25,
+                        ease: [0.25, 0.1, 0.25, 1]
+                    }}
+                    className="antialiased text-[11px] font-bold uppercase tracking-[0.15em] mb-4"
+                    style={{
+                        color: isHovered ? '#52525B' : '#71717A',
+                        transition: 'color 0.2s ease'
+                    }}
                 >
                     {label}
                 </motion.div>
@@ -191,11 +171,33 @@ const StatCard = React.memo(({ label, value, subtext, icon: Icon, color, trend, 
 
             {/* Subtext */}
             <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 0.7 }}
+                transition={{
+                    duration: 0.3,
+                    delay: index * 0.08 + 0.3,
+                    ease: [0.25, 0.1, 0.25, 1]
+                }}
                 className="antialiased text-sm text-stone-400 leading-relaxed relative z-10 font-medium"
-                variants={textVariants}
+                style={{
+                    opacity: isHovered ? 1 : 0.7,
+                    transition: 'opacity 0.2s ease'
+                }}
             >
                 {subtext}
             </motion.div>
+
+            {/* Hover glow effect */}
+            <motion.div
+                className="absolute inset-0 rounded-xl pointer-events-none"
+                animate={{
+                    opacity: isHovered ? 0.03 : 0
+                }}
+                transition={{ duration: 0.3 }}
+                style={{
+                    background: `radial-gradient(circle at 50% 50%, ${style.iconColor}, transparent 70%)`
+                }}
+            />
         </motion.div>
     );
 });
@@ -212,12 +214,15 @@ const DashboardCards = React.memo(() => {
                     <motion.div
                         key={i}
                         className="card"
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: [0.4, 0.7, 0.4] }}
+                        initial={{ opacity: 0.3 }}
+                        animate={{
+                            opacity: [0.3, 0.5, 0.3]
+                        }}
                         transition={{
                             duration: 1.5,
                             repeat: Infinity,
-                            ease: 'easeInOut'
+                            ease: 'easeInOut',
+                            delay: i * 0.1
                         }}
                         style={{
                             minHeight: '220px',

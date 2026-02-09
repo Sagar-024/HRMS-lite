@@ -31,7 +31,6 @@ const EmployeeTable = () => {
                             <th className="px-6 py-4 text-xs font-bold text-stone-500 uppercase tracking-wider">Full Name</th>
                             <th className="px-6 py-4 text-xs font-bold text-stone-500 uppercase tracking-wider">Email</th>
                             <th className="px-6 py-4 text-xs font-bold text-stone-500 uppercase tracking-wider">Department</th>
-                            <th className="px-6 py-4 text-xs font-bold text-stone-500 uppercase tracking-wider text-right">Actions</th>
                         </tr>
                     </thead>
                     <tbody className="divide-y divide-stone-50">
@@ -60,23 +59,13 @@ const EmployeeTable = () => {
                                             {emp.department}
                                         </span>
                                     </td>
-                                    <td className="px-6 py-4 text-right">
-                                        <button
-                                            onClick={() => removeEmployee(emp._id)}
-                                            className="p-2 text-stone-400 hover:text-danger hover:bg-red-50 rounded-lg transition-all"
-                                            title="Delete Employee"
-                                            aria-label={`Remove ${emp.fullName}`}
-                                        >
-                                            <Trash2 size={18} />
-                                        </button>
-                                    </td>
                                 </motion.tr>
                             ))}
                         </AnimatePresence>
 
                         {employees.length === 0 && !loading && (
                             <tr>
-                                <td colSpan="5" className="px-6 py-12 text-center text-stone-400 italic">
+                                <td colSpan="4" className="px-6 py-12 text-center text-stone-400 italic">
                                     No employees found. Add one to get started.
                                 </td>
                             </tr>
@@ -97,7 +86,7 @@ const EmployeeTable = () => {
                             transition={{ delay: index * 0.05 }}
                             className="bg-white p-5 rounded-xl border border-stone-200 shadow-sm relative overflow-hidden"
                         >
-                            {/* Top Row: Avatar, Name, Delete */}
+                            {/* Top Row: Avatar, Name */}
                             <div className="flex items-start justify-between mb-4">
                                 <div className="flex items-center gap-3">
                                     <div className="w-10 h-10 rounded-full bg-stone-100 flex items-center justify-center text-stone-500 border border-stone-200">
@@ -108,13 +97,6 @@ const EmployeeTable = () => {
                                         <p className="text-xs font-mono text-stone-400">{emp.employeeId}</p>
                                     </div>
                                 </div>
-                                <button
-                                    onClick={() => removeEmployee(emp._id)}
-                                    className="p-2 -mr-2 -mt-2 text-stone-400 hover:text-danger hover:bg-red-50 rounded-lg transition-all"
-                                    aria-label="Delete"
-                                >
-                                    <Trash2 size={18} />
-                                </button>
                             </div>
 
                             {/* Info Grid */}
