@@ -91,6 +91,7 @@ Follow these instructions to run the project locally.
 
 3.  **Frontend Setup**
     - Open a new terminal.
+
     ```bash
     cd frontend
     npm install
@@ -110,7 +111,10 @@ Follow these instructions to run the project locally.
 
 - **Authentication**: As per requirements, the system assumes a single Admin user (No login required).
 - **ID Format**: Employee IDs are flexible (e.g., `EMP-001`) to support various org structures.
-- **Design**: Prioritized a "Premium/Clean" aesthetic over a standard admin template to demonstrate frontend design skills.
+- **Design**: Prioritized a "Premium/Clean" aesthetic over a standard admin template.
+  - **Glassmorphism**: Used throughout the UI for a modern, layered feel.
+  - **Data Visualization**: Incorporated sparklines and fluid animations for a dynamic user experience.
+  - **Typography**: employed a sophisticated type hierarchy with `DM Sans` and `Instrument Serif`.
 
 ---
 

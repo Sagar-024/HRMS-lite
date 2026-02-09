@@ -1,129 +1,104 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { UserPlus, Calendar, FileText, Settings, ChevronRight } from 'lucide-react';
+import { UserPlus, Calendar, FileText, Settings, ArrowRight } from 'lucide-react';
 import { motion } from 'framer-motion';
 
-const ActionCard = ({ title, icon: Icon, desc, variant, onClick }) => {
-    const variants = {
-        primary: {
-            container: 'bg-gradient-to-br from-coral-500 to-coral-600 text-white shadow-lg hover:shadow-xl',
-            icon: 'bg-white/20 backdrop-blur-sm',
-            iconColor: 'text-white',
-            textColor: 'text-white',
-            descColor: 'text-white/90',
-            chevronColor: 'text-white/70'
-        },
-        secondary: {
-            container: 'bg-gradient-to-br from-brand-500 to-brand-600 text-white shadow-lg hover:shadow-xl',
-            icon: 'bg-white/20 backdrop-blur-sm',
-            iconColor: 'text-white',
-            textColor: 'text-white',
-            descColor: 'text-white/90',
-            chevronColor: 'text-white/70'
-        },
-        tertiary: {
-            container: 'bg-white border border-stone-200/80 hover:border-violet-200 shadow-soft hover:shadow-card',
-            icon: 'bg-gradient-to-br from-violet-50 to-purple-50',
-            iconColor: 'text-violet-600',
-            textColor: 'text-ink',
-            descColor: 'text-ink-light',
-            chevronColor: 'text-stone-400'
-        },
-        quaternary: {
-            container: 'bg-white border border-stone-200/80 hover:border-stone-300 shadow-soft hover:shadow-card',
-            icon: 'bg-gradient-to-br from-stone-50 to-stone-100',
-            iconColor: 'text-stone-600',
-            textColor: 'text-ink',
-            descColor: 'text-ink-light',
-            chevronColor: 'text-stone-400'
-        }
-    };
-
-    const style = variants[variant] || variants.tertiary;
-    const isPrimary = variant === 'primary' || variant === 'secondary';
-
+const ActionCard = React.memo(({ title, icon: Icon, desc, onClick, index }) => {
     return (
         <motion.button
+            initial={{ opacity: 0, y: 20, scale: 0.98 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            transition={{
+                delay: index * 0.08,
+                duration: 0.4,
+                ease: [0.16, 1, 0.3, 1]
+            }}
             onClick={onClick}
-            className={`group w-full p-6 rounded-2xl text-left flex items-start gap-5 relative overflow-hidden transition-all duration-300 ${style.container}`}
-            whileHover={{ scale: 1.02, y: -3 }}
-            whileTap={{ scale: 0.98 }}
-            transition={{ type: "spring", stiffness: 300, damping: 20 }}
+            aria-label={`${title}: ${desc}`}
+            className="group w-full text-left flex items-start justify-between relative card p-8 hover:border-stone-300"
+            whileHover={{ y: -2 }}
         >
-            {/* Decorative Background Pattern for Primary/Secondary */}
-            {isPrimary && (
-                <div className="absolute top-0 right-0 p-4 opacity-10">
-                    <Icon size={120} strokeWidth={0.5} />
-                </div>
-            )}
-
-            {/* Icon */}
-            <div className={`relative z-10 p-3.5 rounded-xl ${style.icon} group-hover:scale-110 transition-transform duration-300`}>
-                <Icon size={24} strokeWidth={2.5} className={style.iconColor} />
-            </div>
-
-            {/* Content */}
-            <div className="flex-1 relative z-10">
-                <div className="flex items-start justify-between mb-2">
-                    <h4 className={`font-display font-bold text-xl ${style.textColor}`}>
-                        {title}
-                    </h4>
-                    <ChevronRight
-                        size={20}
-                        className={`${style.chevronColor} transform transition-transform duration-300 group-hover:translate-x-1`}
+            <div className="flex items-start gap-4 flex-1">
+                {/* Icon */}
+                <div className="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-lg border border-stone-100 bg-stone-50 text-stone-900 group-hover:bg-stone-900 group-hover:text-white transition-colors duration-300">
+                    <Icon
+                        size={22}
+                        strokeWidth={2}
                     />
                 </div>
-                <p className={`text-sm leading-relaxed font-medium ${style.descColor}`}>
-                    {desc}
-                </p>
+
+                {/* Content */}
+                <div className="flex-1">
+                    <h4 className="font-bold text-base text-ink mb-1 group-hover:text-brand transition-colors duration-300">
+                        {title}
+                    </h4>
+                    <p className="text-sm text-stone-500 leading-normal">
+                        {desc}
+                    </p>
+                </div>
+            </div>
+
+            {/* Arrow */}
+            <div className="text-stone-300 group-hover:text-brand transition-colors duration-300 transform group-hover:translate-x-1">
+                <ArrowRight size={20} strokeWidth={2} />
             </div>
         </motion.button>
     );
-};
+});
 
-const QuickActions = () => {
+ActionCard.displayName = 'ActionCard';
+
+const QuickActions = React.memo(() => {
     const navigate = useNavigate();
 
     return (
-        <section>
-            <div className="flex items-center justify-between mb-6">
-                <h3 className="text-xl font-display font-bold text-ink tracking-tight">
-                    Quick Actions
-                </h3>
-            </div>
+        <div>
+            <h3
+                className="antialiased mb-6"
+                style={{
+                    fontSize: '18px',
+                    fontWeight: 700,
+                    color: '#0A0A0A',
+                    letterSpacing: '-0.01em'
+                }}
+            >
+                Quick Actions
+            </h3>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                 <ActionCard
+                    index={0}
                     title="Add Employee"
                     icon={UserPlus}
-                    desc="Onboard a new team member to the system."
-                    variant="primary"
+                    desc="Onboard a new team member"
                     onClick={() => navigate('/employees')}
                 />
                 <ActionCard
+                    index={1}
                     title="Mark Attendance"
                     icon={Calendar}
-                    desc="Log daily attendance for employees."
-                    variant="secondary"
+                    desc="Log daily attendance"
                     onClick={() => navigate('/attendance')}
                 />
                 <ActionCard
-                    title="Reports"
+                    index={2}
+                    title="Generate Report"
                     icon={FileText}
-                    desc="Export monthly activity summaries."
-                    variant="tertiary"
+                    desc="Export activity summary"
                     onClick={() => { }}
                 />
                 <ActionCard
-                    title="Settings"
+                    index={3}
+                    title="System Settings"
                     icon={Settings}
-                    desc="Configure system preferences."
-                    variant="quaternary"
+                    desc="Configure preferences"
                     onClick={() => { }}
                 />
             </div>
-        </section>
+        </div>
     );
-};
+});
+
+QuickActions.displayName = 'QuickActions';
 
 export default QuickActions;

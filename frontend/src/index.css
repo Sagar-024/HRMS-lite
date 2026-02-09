@@ -1,12 +1,64 @@
+@import url("https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@400;500;600;700&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
+  :root {
+    /* Design Tokens - Spacing */
+    --spacing-xs: clamp(0.25rem, 0.2rem + 0.25vw, 0.5rem);
+    --spacing-sm: clamp(0.5rem, 0.4rem + 0.5vw, 0.75rem);
+    --spacing-md: clamp(1rem, 0.8rem + 1vw, 1.5rem);
+    --spacing-lg: clamp(1.5rem, 1.2rem + 1.5vw, 2.5rem);
+    --spacing-xl: clamp(2rem, 1.5rem + 2.5vw, 4rem);
+    --spacing-2xl: clamp(3rem, 2.5rem + 3vw, 6rem);
+
+    /* Design Tokens - Colors */
+    --color-text-primary: #0a0a0a;
+    --color-text-secondary: #71717a;
+    --color-text-tertiary: #a1a1aa;
+    --color-border: #e4e4e7;
+    --color-bg-primary: #fafafa;
+    --color-bg-card: #ffffff;
+
+    /* Design Tokens - Typography */
+    --text-xs: clamp(0.75rem, 0.7rem + 0.25vw, 0.875rem);
+    --text-sm: clamp(0.875rem, 0.8rem + 0.375vw, 1rem);
+    --text-base: clamp(1rem, 0.9rem + 0.5vw, 1.125rem);
+    --text-lg: clamp(1.125rem, 1rem + 0.625vw, 1.25rem);
+    --text-xl: clamp(1.25rem, 1rem + 1.25vw, 1.5rem);
+    --text-2xl: clamp(1.5rem, 1.25rem + 1.25vw, 2rem);
+    --text-3xl: clamp(1.875rem, 1.5rem + 1.875vw, 2.5rem);
+    --text-4xl: clamp(2.25rem, 1.75rem + 2.5vw, 3.5rem);
+
+    /* Design Tokens - Shadows */
+    /* Modern minimalist layering: 
+       1. Crisp border definition 
+       2. Soft ambient light 
+       3. Grounding shadow */
+    --shadow-card: 
+      0 0 0 1px rgba(0, 0, 0, 0.03), 
+      0 2px 8px rgba(0, 0, 0, 0.04), 
+      0 8px 24px rgba(0, 0, 0, 0.04);
+      
+    --shadow-card-hover: 
+      0 0 0 1px rgba(0, 0, 0, 0.04), 
+      0 4px 12px rgba(0, 0, 0, 0.06), 
+      0 12px 32px rgba(0, 0, 0, 0.08);
+
+    /* Design Tokens - Border Radius */
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 16px;
+  }
+  
   body {
-    background-color: theme('colors.background');
-    color: theme('colors.ink.DEFAULT');
-    @apply font-sans antialiased;
+    /* More distinct gray background for clear separation of white cards */
+    background: #EEF0F2; 
+    color: var(--color-text-primary);
+    font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    @apply antialiased;
     position: relative;
   }
   
@@ -18,21 +70,23 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.015'/%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.02'/%3E%3C/svg%3E");
     pointer-events: none;
     z-index: 9999;
-    mix-blend-mode: overlay;
+    mix-blend-mode: multiply;
   }
   
-  /* Web Guidelines: Visible Focus */
+  /* Accessible Focus States */
   :focus-visible {
-    @apply outline-none ring-2 ring-brand ring-offset-2 ring-offset-white;
+    outline: 2px solid #18181B;
+    outline-offset: 2px;
+    border-radius: 4px;
   }
   
   /* Enhanced Typography */
   h1, h2, h3, h4, h5, h6 {
-    @apply font-display;
-    letter-spacing: -0.02em;
+    font-family: 'DM Sans', system-ui, sans-serif;
+    letter-spacing: -0.025em;
   }
   
   /* Smooth Scrolling */
@@ -44,37 +98,40 @@
 @layer components {
   /* Refined Button Components */
   .btn-primary {
-    @apply bg-brand text-white px-4 py-2.5 rounded-xl 
-           hover:bg-brand-600 transition-all duration-200 
-           shadow-soft hover:shadow-card active:scale-[0.98]
-           focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-brand
-           font-medium;
+    @apply bg-stone-900 text-white px-5 py-2.5 rounded-lg
+           hover:bg-stone-800 transition-all duration-200 
+           shadow-sm hover:shadow-md active:scale-[0.98]
+           focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-stone-900
+           font-medium text-sm tracking-wide;
   }
   
-  .btn-action {
-    @apply bg-gradient-to-br from-coral to-coral-600 text-white px-4 py-2.5 rounded-xl 
-           hover:from-coral-600 hover:to-coral-700 transition-all duration-200 
-           shadow-soft hover:shadow-card active:scale-[0.98]
-           focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-coral
-           font-medium;
-  }
-  
-  /* Refined Card Component */
+  /* Premium Minimal Card - Modern & Lifted */
   .card {
-    @apply bg-white rounded-2xl shadow-card border border-stone-100/50
-           hover:shadow-hover transition-shadow duration-300;
-    background: linear-gradient(to bottom, #ffffff 0%, #fafafa 100%);
+    @apply bg-white transition-all duration-300 relative overflow-hidden;
+    border-radius: 16px; /* Smooth corners */
+    box-shadow: var(--shadow-card);
+    border: 1px solid rgba(0,0,0,0.02); /* Very subtle border */
   }
   
+  .card:hover {
+    box-shadow: var(--shadow-card-hover);
+    transform: translateY(-2px);
+  }
+
+  /* Utility for inset look if specifically needed (e.g. inputs) */
+  .shadow-inner-soft {
+    box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.03);
+  }
+
   /* Custom Scrollbar */
   .custom-scrollbar::-webkit-scrollbar {
     width: 6px;
   }
-  
+
   .custom-scrollbar::-webkit-scrollbar-track {
     @apply bg-stone-100 rounded-full;
   }
-  
+
   .custom-scrollbar::-webkit-scrollbar-thumb {
     @apply bg-stone-300 rounded-full hover:bg-stone-400;
   }
@@ -85,9 +142,9 @@
   .text-balance {
     text-wrap: balance;
   }
-  
+
   /* Gradient Text Effect */
   .gradient-text {
-    @apply bg-gradient-to-r from-brand-500 to-violet-600 bg-clip-text text-transparent;
+    @apply bg-gradient-to-r from-brand to-violet-600 bg-clip-text text-transparent;
   }
 }

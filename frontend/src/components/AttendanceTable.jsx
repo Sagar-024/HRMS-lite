@@ -47,7 +47,8 @@ const AttendanceTable = () => {
             </div>
 
             {/* Table */}
-            <div className="overflow-x-auto">
+            {/* Desktop Table View */}
+            <div className="hidden md:block overflow-x-auto">
                 <table className="w-full text-left border-collapse">
                     <thead>
                         <tr className="bg-stone-50/50 border-b border-stone-100">
@@ -101,6 +102,65 @@ const AttendanceTable = () => {
                         </AnimatePresence>
                     </tbody>
                 </table>
+            </div>
+
+            {/* Mobile Card View */}
+            <div className="md:hidden p-4 space-y-4 bg-stone-50/30">
+                <AnimatePresence mode='popLayout'>
+                    {filteredAttendance.length > 0 ? (
+                        filteredAttendance.map((record, index) => (
+                            <motion.div
+                                key={record._id}
+                                initial={{ opacity: 0, scale: 0.95 }}
+                                animate={{ opacity: 1, scale: 1 }}
+                                exit={{ opacity: 0, scale: 0.95 }}
+                                transition={{ delay: index * 0.03 }}
+                                className="bg-white p-5 rounded-xl border border-stone-200 shadow-sm relative overflow-hidden"
+                            >
+                                {/* Header: Date + Status */}
+                                <div className="flex justify-between items-center mb-4 pb-3 border-b border-stone-100">
+                                    <div className="flex items-center gap-2 text-stone-500">
+                                        <Calendar size={14} />
+                                        <span className="text-sm font-semibold text-ink">
+                                            {record.date ? new Date(record.date).toLocaleDateString(undefined, {
+                                                month: 'short', day: 'numeric', year: 'numeric'
+                                            }) : 'N/A'}
+                                        </span>
+                                    </div>
+                                    <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-bold border ${record.status === 'Present'
+                                        ? 'bg-green-50 text-success border-green-100'
+                                        : 'bg-red-50 text-danger border-red-100'
+                                        }`}>
+                                        <span className={`w-1.5 h-1.5 rounded-full ${record.status === 'Present' ? 'bg-success' : 'bg-danger'}`}></span>
+                                        {record.status}
+                                    </span>
+                                </div>
+
+                                {/* Body: Employee ID */}
+                                <div>
+                                    <p className="text-[10px] text-stone-400 font-bold uppercase tracking-widest mb-1.5">Employee ID</p>
+                                    <div className="flex items-center gap-2">
+                                        <div className="w-8 h-8 rounded bg-stone-100 flex items-center justify-center text-stone-400 font-mono text-xs">
+                                            ID
+                                        </div>
+                                        <p className="text-base font-mono font-medium text-stone-700">{record.employeeId}</p>
+                                    </div>
+                                </div>
+                            </motion.div>
+                        ))
+                    ) : (
+                        <motion.div
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            className="bg-white p-8 rounded-xl border border-stone-200 shadow-sm text-center"
+                        >
+                            <div className="flex flex-col items-center gap-3">
+                                <Filter size={32} className="text-stone-300" />
+                                <p className="text-stone-500 font-medium">No records found matching "{filterId}"</p>
+                            </div>
+                        </motion.div>
+                    )}
+                </AnimatePresence>
             </div>
 
             {/* Footer */}

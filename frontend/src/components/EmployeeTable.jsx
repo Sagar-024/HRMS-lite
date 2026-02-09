@@ -22,7 +22,8 @@ const EmployeeTable = () => {
                 <span className="bg-blue-50 text-brand text-xs font-bold px-2 py-1 rounded-full">{employees.length} Total</span>
             </div>
 
-            <div className="overflow-x-auto">
+            {/* Desktop Table View */}
+            <div className="hidden md:block overflow-x-auto">
                 <table className="w-full text-left border-collapse">
                     <thead>
                         <tr className="bg-stone-50/50 border-b border-stone-100">
@@ -82,6 +83,62 @@ const EmployeeTable = () => {
                         )}
                     </tbody>
                 </table>
+            </div>
+
+            {/* Mobile Card View */}
+            <div className="md:hidden p-4 space-y-4 bg-stone-50/30">
+                <AnimatePresence>
+                    {employees.map((emp, index) => (
+                        <motion.div
+                            key={emp._id}
+                            initial={{ opacity: 0, y: 10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, height: 0, scale: 0.95 }}
+                            transition={{ delay: index * 0.05 }}
+                            className="bg-white p-5 rounded-xl border border-stone-200 shadow-sm relative overflow-hidden"
+                        >
+                            {/* Top Row: Avatar, Name, Delete */}
+                            <div className="flex items-start justify-between mb-4">
+                                <div className="flex items-center gap-3">
+                                    <div className="w-10 h-10 rounded-full bg-stone-100 flex items-center justify-center text-stone-500 border border-stone-200">
+                                        <User size={20} />
+                                    </div>
+                                    <div>
+                                        <h4 className="font-bold text-ink text-base">{emp.fullName}</h4>
+                                        <p className="text-xs font-mono text-stone-400">{emp.employeeId}</p>
+                                    </div>
+                                </div>
+                                <button
+                                    onClick={() => deleteEmployee(emp._id)}
+                                    className="p-2 -mr-2 -mt-2 text-stone-400 hover:text-danger hover:bg-red-50 rounded-lg transition-all"
+                                    aria-label="Delete"
+                                >
+                                    <Trash2 size={18} />
+                                </button>
+                            </div>
+
+                            {/* Info Grid */}
+                            <div className="grid grid-cols-2 gap-y-3 gap-x-4 text-sm">
+                                <div className="col-span-2">
+                                    <p className="text-xs text-stone-400 font-bold uppercase tracking-wider mb-1">Email</p>
+                                    <p className="text-stone-700 break-all">{emp.email}</p>
+                                </div>
+                                <div>
+                                    <p className="text-xs text-stone-400 font-bold uppercase tracking-wider mb-1">Department</p>
+                                    <span className="inline-block bg-stone-100 text-stone-600 px-2 py-1 rounded text-xs font-medium border border-stone-200">
+                                        {emp.department}
+                                    </span>
+                                </div>
+                            </div>
+                        </motion.div>
+                    ))}
+                </AnimatePresence>
+
+                {employees.length === 0 && !loading && (
+                    <div className="text-center py-12 text-stone-400 italic">
+                        No employees found.
+                    </div>
+                )}
             </div>
         </div>
     );

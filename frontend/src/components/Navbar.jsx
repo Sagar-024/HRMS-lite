@@ -1,13 +1,16 @@
 import React from 'react';
+import { Menu } from 'lucide-react';
 
-const Navbar = () => {
+const Navbar = ({ onMenuClick }) => {
     return (
-        <header className="h-24 flex items-center justify-end px-12 sticky top-0 z-40 bg-paper/80 backdrop-blur-sm">
-            <div className="flex items-center gap-2 text-sm text-stone-500">
-                <span>Oct 24, 2026</span>
-                <span className="w-1 h-1 bg-stone-300 rounded-full"></span>
-                <span>Bengaluru, IN</span>
-            </div>
+        <header className="sticky top-0 z-40 flex items-center justify-between p-4 lg:hidden bg-white/80 backdrop-blur-md border-b border-stone-200">
+            <button
+                onClick={onMenuClick}
+                className="p-2 -ml-2 rounded-lg hover:bg-stone-100 text-stone-600 transition-colors"
+                aria-label="Open menu"
+            >
+                <Menu className="w-6 h-6" />
+            </button>
         </header>
     );
 };

@@ -4,7 +4,7 @@ import EmployeeTable from '../components/EmployeeTable';
 
 const Employees = () => {
     return (
-        <div className="max-w-6xl w-full mx-auto">
+        <div className="max-w-6xl w-full mx-auto p-4 md:p-8 lg:p-12">
             <div className="mb-10 border-b border-stone-200 pb-6">
                 <h1 className="font-serif text-4xl text-ink">Personnel</h1>
                 <p className="text-stone-500 mt-2">Manage employee records and department assignments.</p>

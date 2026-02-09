@@ -27,7 +27,7 @@ const EmployeeForm = () => {
     };
 
     return (
-        <div className="bg-white p-8 rounded-lg border border-stone-200 shadow-subtle">
+        <div className="bg-white p-6 lg:p-8 rounded-lg border border-stone-200 shadow-subtle">
             <h3 className="font-serif text-xl text-ink mb-6">New Personnel Entry</h3>
 
             <form className="space-y-5" onSubmit={handleSubmit}>
