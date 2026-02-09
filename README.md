@@ -113,4 +113,4 @@ Follow these instructions to run the project locally.
 
 ---
 
-Made by [Your Name]
+Made by Sagar Kharal
