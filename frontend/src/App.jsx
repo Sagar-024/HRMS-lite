@@ -5,6 +5,7 @@ import Sidebar from './components/Sidebar';
 import Dashboard from './pages/Dashboard';
 import Employees from './pages/Employees';
 import Attendance from './pages/Attendance';
+import Footer from './components/Footer';
 
 function App() {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -26,7 +27,7 @@ function App() {
                         )}
 
                         {/* Routing Content */}
-                        <div className="p-4 lg:p-8">
+                        <div className="p-4 lg:p-8 flex-1">
                             <Routes>
                                 <Route path="/" element={<Dashboard />} />
                                 <Route path="/employees" element={<Employees />} />
@@ -36,6 +37,7 @@ function App() {
                             </Routes>
                         </div>
 
+                        <Footer />
                     </main>
                 </div>
             </div>
