@@ -1,10 +1,8 @@
-# HRMS Lite 🚀
+# HRMS Lite
 
 > A lightweight, modern Human Resource Management System designed for efficiency and aesthetics.
 
-![HRMS Lite Dashboard](https://via.placeholder.com/1200x600?text=HRMS+Lite+Dashboard+Preview)
-
-## 📋 Overview
+## Overview
 
 HRMS Lite is a full-stack web application built to streamline essential HR operations. It allows administrators to manage employee records and track daily attendance through a clean, premium, and professional interface.
 
@@ -14,27 +12,27 @@ This project was built as a **Full-Stack Coding Assignment** with a focus on:
 - **Robust Backend**: RESTful API with MongoDB persistence and validation.
 - **Modern Stack**: React (Vite), Node.js, Express, and Zustand for state management.
 
-## ✨ Key Features
+## Key Features
 
-### 👥 Employee Management
+### Employee Management
 
 - **Add Employees**: Register new staff with ID validation (supports alphanumeric & hyphens).
 - **View Directory**: Access a complete list of employees with department details.
 - **Remove Records**: Delete employee profiles securely.
 
-### 📅 Attendance Tracking
+### Attendance Tracking
 
 - **Mark Attendance**: Log daily status (Present/Absent).
 - **View Logs**: Comprehensive history of attendance records.
 - **Filter**: Search/Filter attendance logs by Employee ID.
 
-### 📊 Dashboard
+### Dashboard
 
 - **Real-time Metrics**: View total employees, daily attendance, and absence rates.
 - **Quick Actions**: One-click navigation to core tasks.
 - **Activity Feed**: Live feed of recent system events.
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 **Frontend:**
 
@@ -51,7 +49,7 @@ This project was built as a **Full-Stack Coding Assignment** with a focus on:
 - [Mongoose](https://mongoosejs.com/) (ODM)
 - [Cors](https://www.npmjs.com/package/cors) & [Dotenv](https://www.npmjs.com/package/dotenv)
 
-## 🚀 Getting Started
+## Getting Started
 
 Follow these instructions to run the project locally.
 
@@ -101,13 +99,13 @@ Follow these instructions to run the project locally.
 
     - _App will run on `http://localhost:5173`_
 
-## 🌐 Deployment Logic
+## Deployment Logic
 
 - **Frontend**: Deployed on [Vercel](https://vercel.com).
 - **Backend**: Deployed on [Render](https://render.com) / [Railway](https://railway.app).
 - **Database**: Hosted on [MongoDB Atlas](https://www.mongodb.com/atlas).
 
-## 📝 Assumptions & Design Decisions
+## Assumptions & Design Decisions
 
 - **Authentication**: As per requirements, the system assumes a single Admin user (No login required).
 - **ID Format**: Employee IDs are flexible (e.g., `EMP-001`) to support various org structures.
@@ -115,4 +113,4 @@ Follow these instructions to run the project locally.
 
 ---
 
-Made with ❤️ by [Your Name]
+Made by [Your Name]
