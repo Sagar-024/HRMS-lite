@@ -25,92 +25,69 @@ const StatCard = React.memo(({ label, value, subtext, icon: Icon, color, trend, 
 
     const style = colorStyles[color];
 
-    // Card container variants - Orchestrated entrance
+    // Card container variants - Professional synchronized entrance
     const cardVariants = {
-        initial: { opacity: 0, y: 20, scale: 0.98 },
+        initial: { opacity: 0, y: 15, scale: 0.98 },
         animate: {
             opacity: 1,
             y: 0,
             scale: 1,
-            transition: {
-                duration: 0.5,
-                delay: index * 0.1, // Stagger between cards
-                ease: [0.16, 1, 0.3, 1],
-                when: "beforeChildren", // Card box appears first/simultaneously but triggers children
-                staggerChildren: 0.1, // content inside flows out
-                delayChildren: 0.1
-            }
-        },
-        hover: {
-            transition: { staggerChildren: 0.05 }
-        }
-    };
-
-    // Icon variants - purposeful motion for feedback
-    const iconVariants = {
-        initial: { opacity: 0, x: -10 },
-        animate: {
-            opacity: 1,
-            x: 0,
-            transition: { duration: 0.3 }
-        },
-        hover: {
-            scale: 1.15,
-            rotate: [0, -8, 8, 0], // Wiggle effect
-            transition: {
-                duration: 0.5,
-                ease: [0.34, 1.56, 0.64, 1] // Spring easing for playful feel
-            }
-        }
-    };
-
-    // Number variants - focus attention
-    const numberVariants = {
-        initial: { y: 15, opacity: 0 },
-        animate: {
-            y: 0,
-            opacity: 1,
-            transition: {
-                duration: 0.5,
-                type: 'spring',
-                stiffness: 150,
-                damping: 15
-            }
-        },
-        hover: {
-            scale: 1.05,
-            transition: {
-                duration: 0.2,
-                type: 'spring',
-                stiffness: 400,
-                damping: 17
-            }
-        }
-    };
-
-    // Trend badge variants
-    const badgeVariants = {
-        initial: { opacity: 0, scale: 0.8, x: 10 },
-        animate: {
-            opacity: 1,
-            scale: 1,
-            x: 0,
             transition: {
                 duration: 0.4,
+                delay: index * 0.08, // Subtle stagger between cards
+                ease: [0.16, 1, 0.3, 1],
+                staggerChildren: 0.04, // Content flows in almost immediately
+            }
+        },
+        hover: {
+            transition: { staggerChildren: 0.03 }
+        }
+    };
+
+    const iconVariants = {
+        initial: { opacity: 0, scale: 0.8 },
+        animate: {
+            opacity: 1,
+            scale: 1,
+            transition: { duration: 0.3, ease: "easeOut" }
+        },
+        hover: {
+            scale: 1.1,
+            rotate: [0, -5, 5, 0],
+            transition: { duration: 0.4 }
+        }
+    };
+
+    const numberVariants = {
+        initial: { opacity: 0, y: 10 },
+        animate: {
+            opacity: 1,
+            y: 0,
+            transition: {
+                duration: 0.5,
                 type: 'spring',
                 stiffness: 200,
                 damping: 20
             }
-        },
-        hover: {
-            scale: 1.1,
-            y: -2,
-            transition: {
-                duration: 0.2,
-                type: 'spring',
-                stiffness: 500,
-                damping: 15
-            }
+        }
+    };
+
+    const badgeVariants = {
+        initial: { opacity: 0, x: 10 },
+        animate: {
+            opacity: 1,
+            x: 0,
+            transition: { duration: 0.3 }
+        }
+    };
+
+    // New variants for text details to ensure they sync
+    const textVariants = {
+        initial: { opacity: 0, y: 5 },
+        animate: {
+            opacity: 1,
+            y: 0,
+            transition: { duration: 0.3 }
         }
     };
 
@@ -205,12 +182,8 @@ const StatCard = React.memo(({ label, value, subtext, icon: Icon, color, trend, 
 
                 {/* Label */}
                 <motion.div
-                    className="antialiased text-[11px] font-bold uppercase tracking-[0.15em] mb-4"
-                    animate={{
-                        y: isHovered ? -2 : 0,
-                        color: isHovered ? '#52525B' : '#71717A'
-                    }}
-                    transition={{ duration: 0.2 }}
+                    className="antialiased text-[11px] font-bold uppercase tracking-[0.15em] mb-4 text-stone-500"
+                    variants={textVariants}
                 >
                     {label}
                 </motion.div>
@@ -219,10 +192,7 @@ const StatCard = React.memo(({ label, value, subtext, icon: Icon, color, trend, 
             {/* Subtext */}
             <motion.div
                 className="antialiased text-sm text-stone-400 leading-relaxed relative z-10 font-medium"
-                animate={{
-                    opacity: isHovered ? 1 : 0.7
-                }}
-                transition={{ duration: 0.2 }}
+                variants={textVariants}
             >
                 {subtext}
             </motion.div>
