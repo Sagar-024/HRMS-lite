@@ -38,8 +38,10 @@ const useStore = create((set, get) => ({
         loading: false,
       }));
     } catch (err) {
-      set({ error: err.message, loading: false });
-      throw err; // Re-throw so components can handle success/fail UI
+      const message = err.response?.data?.message || err.message;
+      set({ error: message, loading: false });
+      const error = new Error(message);
+      throw error;
     }
   },
 
@@ -65,8 +67,9 @@ const useStore = create((set, get) => ({
         loading: false,
       }));
     } catch (err) {
-      set({ error: err.message, loading: false });
-      throw err;
+      const message = err.response?.data?.message || err.message;
+      set({ error: message, loading: false });
+      throw new Error(message);
     }
   },
 
@@ -79,8 +82,9 @@ const useStore = create((set, get) => ({
         loading: false,
       }));
     } catch (err) {
-      set({ error: err.message, loading: false });
-      throw err;
+      const message = err.response?.data?.message || err.message;
+      set({ error: message, loading: false });
+      throw new Error(message);
     }
   },
 }));
