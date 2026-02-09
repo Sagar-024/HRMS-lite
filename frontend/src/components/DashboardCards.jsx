@@ -25,25 +25,35 @@ const StatCard = React.memo(({ label, value, subtext, icon: Icon, color, trend, 
 
     const style = colorStyles[color];
 
-    // Card container variants - following interaction-design timing guidelines
+    // Card container variants - Orchestrated entrance
     const cardVariants = {
-        initial: { opacity: 0, y: 30, scale: 0.98 },
+        initial: { opacity: 0, y: 20, scale: 0.98 },
         animate: {
             opacity: 1,
             y: 0,
             scale: 1,
             transition: {
-                duration: 0.4, // 300-500ms for medium transitions
-                delay: index * 0.1, // Staggered entrance
-                ease: [0.16, 1, 0.3, 1] // Ease-out for entering
+                duration: 0.5,
+                delay: index * 0.1, // Stagger between cards
+                ease: [0.16, 1, 0.3, 1],
+                when: "beforeChildren", // Card box appears first/simultaneously but triggers children
+                staggerChildren: 0.1, // content inside flows out
+                delayChildren: 0.1
             }
         },
-        // Removed y movement - micro-interactions on elements are enough
-        hover: {}
+        hover: {
+            transition: { staggerChildren: 0.05 }
+        }
     };
 
     // Icon variants - purposeful motion for feedback
     const iconVariants = {
+        initial: { opacity: 0, x: -10 },
+        animate: {
+            opacity: 1,
+            x: 0,
+            transition: { duration: 0.3 }
+        },
         hover: {
             scale: 1.15,
             rotate: [0, -8, 8, 0], // Wiggle effect
@@ -56,20 +66,19 @@ const StatCard = React.memo(({ label, value, subtext, icon: Icon, color, trend, 
 
     // Number variants - focus attention
     const numberVariants = {
-        initial: { scale: 0.8, opacity: 0 },
+        initial: { y: 15, opacity: 0 },
         animate: {
-            scale: 1,
+            y: 0,
             opacity: 1,
             transition: {
-                delay: index * 0.1 + 0.2,
-                duration: 0.4,
+                duration: 0.5,
                 type: 'spring',
-                stiffness: 400,
-                damping: 17
+                stiffness: 150,
+                damping: 15
             }
         },
         hover: {
-            scale: 1.08,
+            scale: 1.05,
             transition: {
                 duration: 0.2,
                 type: 'spring',
@@ -79,24 +88,23 @@ const StatCard = React.memo(({ label, value, subtext, icon: Icon, color, trend, 
         }
     };
 
-    // Trend badge variants - orientation feedback
+    // Trend badge variants
     const badgeVariants = {
-        initial: { opacity: 0, scale: 0.5, y: -20 },
+        initial: { opacity: 0, scale: 0.8, x: 10 },
         animate: {
             opacity: 1,
             scale: 1,
-            y: 0,
+            x: 0,
             transition: {
-                delay: index * 0.1 + 0.3,
                 duration: 0.4,
                 type: 'spring',
-                stiffness: 300,
+                stiffness: 200,
                 damping: 20
             }
         },
         hover: {
-            scale: 1.15,
-            y: -3,
+            scale: 1.1,
+            y: -2,
             transition: {
                 duration: 0.2,
                 type: 'spring',

@@ -85,3 +85,26 @@ export const deleteEmployee = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+// @desc    Update employee
+// @route   PUT /api/employees/:id
+// @access  Public
+export const updateEmployee = async (req, res) => {
+  try {
+    const { employeeId, fullName, email, department } = req.body;
+    const employee = await Employee.findById(req.params.id);
+
+    if (employee) {
+      employee.employeeId = employeeId || employee.employeeId;
+      employee.fullName = fullName || employee.fullName;
+      employee.email = email || employee.email;
+      employee.department = department || employee.department;
+
+      const updatedEmployee = await employee.save();
+      res.json(updatedEmployee);
+    } else {
+      res.status(404).json({ message: "Employee not found" });
+    }
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};

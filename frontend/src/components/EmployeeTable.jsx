@@ -4,7 +4,7 @@ import { Trash2, User } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const EmployeeTable = () => {
-    const { employees, deleteEmployee, loading } = useStore();
+    const { employees, removeEmployee, loading } = useStore();
 
     if (loading && employees.length === 0) {
         return (
@@ -62,10 +62,10 @@ const EmployeeTable = () => {
                                     </td>
                                     <td className="px-6 py-4 text-right">
                                         <button
-                                            onClick={() => deleteEmployee(emp._id)}
+                                            onClick={() => removeEmployee(emp._id)}
                                             className="p-2 text-stone-400 hover:text-danger hover:bg-red-50 rounded-lg transition-all"
                                             title="Delete Employee"
-                                            aria-label={`Delete ${emp.fullName}`}
+                                            aria-label={`Remove ${emp.fullName}`}
                                         >
                                             <Trash2 size={18} />
                                         </button>
@@ -109,7 +109,7 @@ const EmployeeTable = () => {
                                     </div>
                                 </div>
                                 <button
-                                    onClick={() => deleteEmployee(emp._id)}
+                                    onClick={() => removeEmployee(emp._id)}
                                     className="p-2 -mr-2 -mt-2 text-stone-400 hover:text-danger hover:bg-red-50 rounded-lg transition-all"
                                     aria-label="Delete"
                                 >
