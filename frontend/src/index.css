@@ -54,8 +54,8 @@
   }
   
   body {
-    /* More distinct gray background for clear separation of white cards */
-    background: #EEF0F2; 
+    /* Revert to original lighter background */
+    background: #F9FAFB; 
     color: var(--color-text-primary);
     font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
     @apply antialiased;
@@ -107,10 +107,11 @@
   
   /* Premium Minimal Card - Modern & Lifted */
   .card {
-    @apply bg-white transition-all duration-300 relative overflow-hidden;
-    border-radius: 16px; /* Smooth corners */
+    @apply bg-white border border-stone-200/80
+           hover:border-stone-300 transition-all duration-300 relative overflow-hidden;
+    border-radius: 12px;
+    background: linear-gradient(to bottom, #ffffff 0%, #fafafa 100%);
     box-shadow: var(--shadow-card);
-    border: 1px solid rgba(0,0,0,0.02); /* Very subtle border */
   }
   
   .card:hover {

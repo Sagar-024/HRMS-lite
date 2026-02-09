@@ -10,33 +10,7 @@ import {
 } from 'lucide-react';
 import { motion, useMotionValue, useTransform } from 'framer-motion';
 
-const Sparkline = ({ trend, color }) => {
-    // Generate paths based on trend
-    const path = trend === 'up'
-        ? "M0,35 C30,35 30,20 60,20 C90,20 90,5 120,5" // Upward curve
-        : "M0,5 C30,5 30,20 60,20 C90,20 90,35 120,35"; // Downward curve
 
-    return (
-        <div className="absolute bottom-0 right-0 w-[120px] h-[40px] opacity-10 pointer-events-none overflow-hidden pb-4 pr-4">
-            <motion.svg
-                viewBox="0 0 120 40"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-                initial={{ pathLength: 0, opacity: 0 }}
-                animate={{ pathLength: 1, opacity: 1 }}
-                transition={{ duration: 1.5, ease: "easeOut" }}
-                className="w-full h-full"
-            >
-                <path
-                    d={path}
-                    stroke={color}
-                    strokeWidth="3"
-                    strokeLinecap="round"
-                />
-            </motion.svg>
-        </div>
-    );
-};
 
 const StatCard = React.memo(({ label, value, subtext, icon: Icon, color, trend, index }) => {
     const [isHovered, setIsHovered] = useState(false);
@@ -149,8 +123,7 @@ const StatCard = React.memo(({ label, value, subtext, icon: Icon, color, trend, 
                 padding: '32px',
             }}
         >
-            {/* Sparkline Background */}
-            <Sparkline trend={trend || 'up'} color={style.iconColor} />
+
 
             {/* Accent bar */}
             <motion.div
@@ -168,11 +141,10 @@ const StatCard = React.memo(({ label, value, subtext, icon: Icon, color, trend, 
                     <motion.div variants={iconVariants}>
                         <motion.div
                             animate={{
-                                backgroundColor: isHovered ? style.accentColor : style.accentColor, // Always show color
-                                scale: isHovered ? 1.05 : 1
+                                backgroundColor: isHovered ? style.accentColor : 'transparent'
                             }}
                             transition={{ duration: 0.3 }}
-                            className="inline-flex p-3 rounded-xl" // Increased padding slightly
+                            className="inline-flex p-2.5 rounded-xl"
                         >
                             <Icon
                                 size={28}
