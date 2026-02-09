@@ -1,8 +1,13 @@
 import axios from "axios";
 
-// Use relative path so Vite proxy handles it
+// Use the environment variable for API URL, defaulting to the Railway production endpoint.
+const API_URL =
+  import.meta.env.VITE_API_URL ||
+  "https://hrms-lite-production-6226.up.railway.app";
+
+// Create axios instance with the full URL
 const api = axios.create({
-  baseURL: "/api", // Proxy will send this to http://localhost:5000/api
+  baseURL: `${API_URL}/api`,
 });
 
 // Employees
