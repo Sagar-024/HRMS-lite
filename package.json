@@ -1,0 +1,13 @@
+{
+  "name": "hrms-lite-monorepo",
+  "version": "1.0.0",
+  "private": true,
+  "engines": {
+    "node": "18.x"
+  },
+  "scripts": {
+    "postinstall": "cd backend && npm install",
+    "build": "echo 'Building backend...'",
+    "start": "cd backend && npm start"
+  }
+}
